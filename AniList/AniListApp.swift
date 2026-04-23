@@ -1,20 +1,12 @@
-//
-//  AniListApp.swift
-//  AniList
-//
-//  Created by BORA on 16.04.2026.
-//
-
 import SwiftUI
 import CoreData
 
 @main
 struct AniListApp: App {
     let persistenceController = PersistenceController.shared
-
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
