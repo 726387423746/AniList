@@ -5,7 +5,9 @@ import Observation
 @Observable
 final class FavoritesViewModel {
     static let shared = FavoritesViewModel()
-    private init() {}
+    private init() {
+        fetchFavorites()
+    }
     let viewContext = PersistenceController.shared.container.viewContext
     var favoriteAnimeArray: [FavoriteAnime] = .init()
     

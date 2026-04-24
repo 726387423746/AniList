@@ -51,7 +51,7 @@ struct SearchView: View {
                                 } label: {
                                     Label("Favorite", systemImage: "heart.fill")
                                 }
-                                .tint(favoritesViewModel.isFavorite(id: result.id) ? .red : .gray)
+                                .tint(favoritesViewModel.favoriteAnimeArray.contains(where: { $0.id == Int64(result.id) }) ? .red : .gray)
                             }
                             .listRowSeparatorTint(.purple)
                             .listRowBackground(Color.black)
