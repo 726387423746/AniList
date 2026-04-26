@@ -4,17 +4,12 @@ import Foundation
 final class SearchViewModel {
     var search: String = ""
     var searchResults: [AnimeDataModel] = []
-    var errorMessage: String?
     var isLoading: Bool = false
     
-    func searchAnime() async {
+    func searchAnime() async throws {
         isLoading = true
-        do {
-            searchResults = try await JikanService.shared.searchAnime(for: search)
-        } catch {
-            errorMessage = error.localizedDescription
-        }
-        isLoading = false
+        defer {isLoading = false}
+        searchResults = try await JikanService.shared.searchAnime(for: search)
     }
 }
 

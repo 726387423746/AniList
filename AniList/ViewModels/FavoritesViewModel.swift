@@ -2,8 +2,13 @@ import CoreData
 import Foundation
 import Observation
 
+
+
 @Observable
 final class FavoritesViewModel {
+    enum FavoriteAction {
+        case added, removed
+    }
     static let shared = FavoritesViewModel()
     private init() {
         fetchFavorites()
@@ -63,11 +68,13 @@ final class FavoritesViewModel {
         }
     }
     
-    func toggleFavorite(anime: AnimeDataModel) {
+    func toggleFavorite(anime: AnimeDataModel) -> FavoriteAction {
         if isFavorite(id: anime.id) {
             removeFavorite(id: anime.id)
+            return .removed
         } else {
             addFavorite(anime: anime)
+            return .added
         }
     }
 }

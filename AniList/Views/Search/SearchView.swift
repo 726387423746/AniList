@@ -3,6 +3,7 @@ import SwiftUI
 struct SearchView: View {
     @State private var searchViewModel = SearchViewModel()
     @State private var favoritesViewModel = FavoritesViewModel.shared
+    @Environment(ToastViewModel.self) private var toastViewModel
     
     var body: some View {
         NavigationStack {
@@ -24,7 +25,18 @@ struct SearchView: View {
                         .foregroundStyle(.purple)
                         .onSubmit {
                             Task {
-                                await searchViewModel.searchAnime()
+                                guard !searchViewModel.search.trimmingCharacters(in: .whitespaces).isEmpty else {
+                                    toastViewModel.show(Toast(type: .info, message: "Type something first"))
+                                    return
+                                }
+                                do {
+                                    try await searchViewModel.searchAnime()
+                                    if searchViewModel.searchResults.isEmpty {
+                                        toastViewModel.show(Toast(type: .info, message: "No results found"))
+                                    }
+                                } catch {
+                                    toastViewModel.show(Toast(type: .error, message: "Search failed"))
+                                }
                             }
                         }
                     }
@@ -47,7 +59,11 @@ struct SearchView: View {
                             }
                             .swipeActions(edge: .leading, allowsFullSwipe: true) {
                                 Button {
-                                    favoritesViewModel.toggleFavorite(anime: result)
+                                    let action = favoritesViewModel.toggleFavorite(anime: result)
+                                    switch action {
+                                    case .added: toastViewModel.show(Toast(type: .success, message: "\(result.title) has been added"))
+                                    case .removed: toastViewModel.show(Toast(type: .info, message: "\(result.title) has been removed"))
+                                    }
                                 } label: {
                                     Label("Favorite", systemImage: "heart.fill")
                                 }
