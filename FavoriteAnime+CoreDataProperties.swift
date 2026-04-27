@@ -20,6 +20,7 @@ extension FavoriteAnime {
     @NSManaged public var score: Double
     @NSManaged public var genres: Data?
     @NSManaged public var images: Data?
+    @NSManaged public var imageData: Data?
 
 }
 

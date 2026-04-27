@@ -29,9 +29,9 @@ final class FavoritesViewModel {
         }
     }
     
-    func addFavorite(anime: AnimeDataModel) {
+    func addFavorite(anime: AnimeDataModel) async {
         guard !isFavorite(id: anime.id) else { return }
-        FavoriteAnime.create(anime, context: viewContext)
+        await FavoriteAnime.create(anime, context: viewContext)
         do {
             try viewContext.save()
             fetchFavorites()
@@ -68,12 +68,12 @@ final class FavoritesViewModel {
         }
     }
     
-    func toggleFavorite(anime: AnimeDataModel) -> FavoriteAction {
+    func toggleFavorite(anime: AnimeDataModel) async -> FavoriteAction {
         if isFavorite(id: anime.id) {
             removeFavorite(id: anime.id)
             return .removed
         } else {
-            addFavorite(anime: anime)
+            await addFavorite(anime: anime)
             return .added
         }
     }

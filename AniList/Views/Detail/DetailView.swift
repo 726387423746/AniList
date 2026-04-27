@@ -70,28 +70,4 @@ struct DetailView: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        DetailView(anime: AnimeDataModel(
-            id: 20,
-            title: "Naruto",
-            images: AnimeImageModel(
-                jpg: JPGModel(
-                    imageURL: "https://myanimelist.net/images/anime/1141/142503.jpg",
-                    smallImageURL: "https://myanimelist.net/images/anime/1141/142503t.jpg",
-                    largeImageURL: "https://myanimelist.net/images/anime/1141/142503l.jpg"
-                )
-            ),
-            synopsis: "Twelve years ago, a colossal demon fox terrorized the world. Team 7 takes on a series of difficult missions, forcing its members to grow in strength and comradery despite their many differences.",
-            episodes: 220,
-            genres: [
-                GenreModel(id: 1, name: "Action"),
-                GenreModel(id: 2, name: "Adventure"),
-                GenreModel(id: 10, name: "Fantasy")
-            ],
-            rank: 722,
-            popularity: 9,
-            score: 8.02
-        ))
-    }
-}
+

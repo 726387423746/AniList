@@ -59,10 +59,12 @@ struct SearchView: View {
                             }
                             .swipeActions(edge: .leading, allowsFullSwipe: true) {
                                 Button {
-                                    let action = favoritesViewModel.toggleFavorite(anime: result)
-                                    switch action {
-                                    case .added: toastViewModel.show(Toast(type: .success, message: "\(result.title) has been added"))
-                                    case .removed: toastViewModel.show(Toast(type: .info, message: "\(result.title) has been removed"))
+                                    Task {
+                                        let action = await favoritesViewModel.toggleFavorite(anime: result)
+                                        switch action {
+                                        case .added: toastViewModel.show(Toast(type: .success, message: "\(result.title) has been added"))
+                                        case .removed: toastViewModel.show(Toast(type: .info, message: "\(result.title) has been removed"))
+                                        }
                                     }
                                 } label: {
                                     Label("Favorite", systemImage: "heart.fill")
